@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Will You Be My Valentine?</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <img id = 'valentineGif' src="happy.gif" alt="Valentine question">
+
+  <h2 id = 'valentineMessage'>Will you be my Valentine? 💖</h2>
+
+  <div class="buttons">
+    <button class="yes" id = "yesButton" onclick="yesClicked()">Yes</button>
+    <button class="no" id="noButton" onclick="noClicked()">No</button>
+  </div>
+<script>
+    let noCounter = 0;
+    let noPadding = 12;
+    let noFontSize = 16;
+    let yesOffset = 0;
+    let finalText = "🥺 Pleas"; 
+
+    const noText = [
+        'Are you sure?',
+        'Are you really sure?',
+        'Are you really really sure?',
+        'Are you really really really sure?',
+        'Honey.....',
+        'Did I do something wrong?',
+        'I must have done something wrong...',
+        'Please tell me what did I do wrong 🥺'
+    ];
+
+    const maxNo = 10 + noText.length;
+
+    function noClicked() {
+        const noBtn = document.getElementById("noButton");
+        const yesBtn = document.getElementById("yesButton");
+        const valentineG = document.getElementById("valentineGif");
+        const valentineM = document.getElementById("valentineMessage");
+
+        function growNo() {
+            // Grow NO button (affects layout)
+            noPadding += 6;
+            noFontSize += 2;
+            noBtn.style.padding = `${noPadding}px ${noPadding * 2}px`;
+            noBtn.style.fontSize = `${noFontSize}px`;
+        }
+
+        if (noCounter < noText.length) {
+            // Normal messages
+            noBtn.textContent = noText[noCounter];
+            if (noCounter === noText.length - 1) {
+                valentineG.src = "gifs/penguin.gif";
+            }
+            noCounter++;
+            growNo();
+
+        } else if (noCounter < maxNo) {
+            // Extra desperate messages
+            finalText += 'e';
+            noBtn.textContent = finalText;
+            noCounter++;
+            growNo();
+
+        } else {
+            // Final line, repeated forever
+            valentineM.textContent = 'I see how it is';
+            noBtn.textContent = 'Freda, you can stop now, I got the message 😭💔';
+            valentineG.src = "gifs/heartbroken.gif";
+            yesBtn.style.display = "none"
+        }
+    }
+
+
+    function yesClicked() {
+    window.location.href = "yes.html";
+    }
+</script>
+
+
+</body>
+</html>
