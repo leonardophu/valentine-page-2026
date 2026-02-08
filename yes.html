@@ -8,9 +8,60 @@
 
 <body class="yes-page">
 
-  <img src="yay.gif" alt="Happy Valentine">
+  <img src="gifs/yay.gif" alt="Happy Valentine">
 
-  <h1>Thank You Honey! You’re my Valentine 💖🥰</h1>
+  <h1>YAYYYYYY HONEY YAYYYYY!!!! 💖🥰</h1>
+  <h1>Happy Valentines Honey</h1>
+
+<script>
+
+    function createHeart() {
+        const heart = document.createElement('img');
+        heart.src = 'gifs/heart.png'; 
+        heart.style.position = 'fixed';
+        heart.style.top = '-30px';
+        heart.style.pointerEvents = 'none';
+        heart.style.zIndex = 1;
+
+        // Random horizontal position
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+
+        // Random size
+        const size = Math.random() * 15 + 10; // 10px - 25px
+        heart.style.width = size + 'px';
+        heart.style.height = size + 'px';
+
+        // Random opacity
+        heart.style.opacity = (Math.random() * 0.5 + 0.3).toString();
+
+        // Random rotation start angle (-15 to +15 degrees)
+        const startRotate = Math.random() * 30 - 15;
+        heart.style.transform = `rotate(${startRotate}deg)`;
+
+        // Random fall duration
+        const duration = Math.random() * 2 + 2; // 2-4 seconds
+        heart.style.transition = `transform ${duration}s linear, opacity ${duration}s linear, left ${duration}s linear`;
+
+        document.body.appendChild(heart);
+
+        // Slight horizontal drift (-20px to +20px) and rotate a bit while falling
+        const drift = Math.random() * 40 - 20;
+        const endRotate = startRotate + (Math.random() * 20 - 10); // small rotation change
+
+        setTimeout(() => {
+            heart.style.transform = `translateY(${window.innerHeight}px) rotate(${endRotate}deg)`;
+            heart.style.left = `calc(${heart.style.left} + ${drift}px)`;
+            heart.style.opacity = 0;
+        }, 50);
+
+        // Remove after animation
+        setTimeout(() => heart.remove(), duration * 1000);
+    }
+
+    // Continuously create hearts
+    setInterval(createHeart, 300);
+
+</script>
 
 </body>
 </html>

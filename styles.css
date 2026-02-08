@@ -2,7 +2,7 @@
 body {
   margin: 0;
   height: 100vh;
-  background: #ffe6eb; /* soft pink Valentine background */
+  background: #ffeef7; /* soft pink Valentine background */
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
@@ -61,4 +61,23 @@ button.no {
 
 .yes-page h1 {
   color: #ff4d6d;
+}
+
+#valentineGif {
+  width: 320px;      
+  height: auto;      
+  display: block;
+  margin: 20px auto;
+}
+
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+button.no.wiggle {
+  animation: wiggle 0.3s ease;
 }

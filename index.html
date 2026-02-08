@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Will You Be My Valentine?</title>
+  <title>Will You Be My Valentine? 🥺</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-  <img id = 'valentineGif' src="happy.gif" alt="Valentine question">
+  <img id = 'valentineGif' src="gifs/Valentine.gif" alt="Valentine question">
 
-  <h2 id = 'valentineMessage'>Will you be my Valentine? 💖</h2>
+  <h1 id = 'valentineMessage'>Will you be my Valentine? 💖</h1>
 
   <div class="buttons">
     <button class="yes" id = "yesButton" onclick="yesClicked()">Yes</button>
@@ -28,57 +28,137 @@
         'Are you really sure?',
         'Are you really really sure?',
         'Are you really really really sure?',
-        'Honey.....',
+        'Pretty please 🥺', 
+        'Honey.....', 
         'Did I do something wrong?',
         'I must have done something wrong...',
         'Please tell me what did I do wrong 🥺'
     ];
 
-    const maxNo = 10 + noText.length;
+    const maxNo = 4 + noText.length;
+    const noOp = () => {};
 
     function noClicked() {
+
         const noBtn = document.getElementById("noButton");
         const yesBtn = document.getElementById("yesButton");
         const valentineG = document.getElementById("valentineGif");
         const valentineM = document.getElementById("valentineMessage");
 
+        noBtn.classList.add('wiggle');
+        setTimeout(() => noBtn.classList.remove('wiggle'), 300);
+
         function growNo() {
             // Grow NO button (affects layout)
-            noPadding += 6;
-            noFontSize += 2;
-            noBtn.style.padding = `${noPadding}px ${noPadding * 2}px`;
-            noBtn.style.fontSize = `${noFontSize}px`;
+            noPadding += 5;
+            noFontSize += 3;
+            yesBtn.style.padding = `${noPadding}px ${noPadding * 2}px`;
+            yesBtn.style.fontSize = `${noFontSize}px`;
         }
 
         if (noCounter < noText.length) {
             // Normal messages
-            noBtn.textContent = noText[noCounter];
-            if (noCounter === noText.length - 1) {
-                valentineG.src = "gifs/penguin.gif";
+
+            if(noCounter == 0) {
+                noOp();
             }
+            else if (noCounter > 2 && noCounter < 4) {
+                valentineG.src = "gifs/hmm.gif";
+            } else if (noCounter == 4) {
+                valentineG.src = "gifs/pretty_please.gif"
+            } else if (noCounter == 5) {
+                valentineG.src = "gifs/wait_a_minute.gif";
+            } else if (noCounter >=6 && noCounter <= 7) {
+                valentineG.src = "gifs/somethingWrong.gif"
+            } else if (noCounter == 8) {
+                valentineG.src = "gifs/wrong.gif"
+            }
+            noBtn.textContent = noText[noCounter];
             noCounter++;
             growNo();
 
         } else if (noCounter < maxNo) {
             // Extra desperate messages
+            let picChoose = noCounter % 4 + 1;
+            let picCycle = `gifs/please_${picChoose}.gif`; 
+            valentineG.src = picCycle;
             finalText += 'e';
             noBtn.textContent = finalText;
             noCounter++;
             growNo();
 
-        } else {
+        } else if (noCounter == maxNo) {
             // Final line, repeated forever
             valentineM.textContent = 'I see how it is';
             noBtn.textContent = 'Freda, you can stop now, I got the message 😭💔';
-            valentineG.src = "gifs/heartbreak.gif";
+            valentineG.src = "gifs/sad.gif";
             yesBtn.style.display = "none"
+            noCounter++;
+        } else if (noCounter == maxNo + 1) {
+            valentineG.src = "gifs/leo_trash.gif"
+            noBtn.textContent = 'I got the message :(';
+            noCounter++;
+        } else {
+            valentineM.textContent = '哈哈哈哈 You made it at the end';
+            noBtn.style.display = "none"
+            valentineG.src = "gifs/Bad_Ending.gif"
+
         }
     }
 
 
     function yesClicked() {
     window.location.href = "yes.html";
+        }
+    
+    
+    function createHeart() {
+        const heart = document.createElement('img');
+        heart.src = 'gifs/heart.png'; 
+        heart.style.position = 'fixed';
+        heart.style.top = '-30px';
+        heart.style.pointerEvents = 'none';
+        heart.style.zIndex = 1;
+
+        // Random horizontal position
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+
+        // Random size
+        const size = Math.random() * 30 + 20; // 10px - 25px
+        heart.style.width = size + 'px';
+        heart.style.height = size + 'px';
+
+        // Random opacity
+        heart.style.opacity = (Math.random() * 0.5 + 0.3).toString();
+
+        // Random rotation start angle (-15 to +15 degrees)
+        const startRotate = Math.random() * 30 - 15;
+        heart.style.transform = `rotate(${startRotate}deg)`;
+
+        // Random fall duration
+        const duration = Math.random() * 2 + 2; // 2-4 seconds
+        heart.style.transition = `transform ${duration}s linear, opacity ${duration}s linear, left ${duration}s linear`;
+
+        document.body.appendChild(heart);
+
+        // Slight horizontal drift (-20px to +20px) and rotate a bit while falling
+        const drift = Math.random() * 40 - 20;
+        const endRotate = startRotate + (Math.random() * 20 - 10); // small rotation change
+
+        setTimeout(() => {
+            heart.style.transform = `translateY(${window.innerHeight}px) rotate(${endRotate}deg)`;
+            heart.style.left = `calc(${heart.style.left} + ${drift}px)`;
+            heart.style.opacity = 0;
+        }, 50);
+
+        // Remove after animation
+        setTimeout(() => heart.remove(), duration * 1000);
     }
+
+    // Continuously create hearts
+    setInterval(createHeart, 300);
+
+
 </script>
 
 
